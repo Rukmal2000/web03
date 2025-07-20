@@ -10,15 +10,16 @@ import { ConfirmationPage } from './components/ConfirmationPage';
 import { UserDashboard } from './components/UserDashboard';
 import { VehicleDetails } from './components/VehicleDetails';
 import { ProfilePage } from './components/ProfilePage';
-import { PartnerDashboard } from './components/PartnerDashboard';
+import { EnhancedPartnerDashboard } from './components/EnhancedPartnerDashboard';
 import { VehicleOwnerRegistration } from './components/VehicleOwnerRegistration';
 import { MaterialSupplierRegistration } from './components/MaterialSupplierRegistration';
+import { ServicesListingPage } from './components/ServicesListingPage';
 import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
 import { User, Vehicle, Partner } from './types';
 import { vehicles } from './data/services';
 
-type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'confirmation' | 'dashboard' | 'vehicle-details' | 'profile' | 'partner-dashboard';
+type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'confirmation' | 'dashboard' | 'vehicle-details' | 'profile' | 'partner-dashboard' | 'services-listing';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewType>('home');
@@ -71,8 +72,9 @@ function App() {
   };
 
   const handleConfirmationAction = (action: 'home' | 'dashboard') => {
-    if (action === 'home') {
-      setCurrentView('home');
+  const handleConfirmationAction = (action: 'services' | 'dashboard') => {
+    if (action === 'services') {
+      setCurrentView('services-listing');
     } else {
       // Create user from registration data
       const newUser: User = {
@@ -175,7 +177,9 @@ function App() {
       case 'dashboard':
         return user ? <UserDashboard user={user} onVehicleSelect={handleVehicleSelect} /> : <HomePage />;
       case 'partner-dashboard':
-        return partner ? <PartnerDashboard partner={partner} /> : <HomePage onLogin={handleShowLogin} onSignUp={handleShowSignUp} />;
+        return partner ? <EnhancedPartnerDashboard partner={partner} onLogout={handleLogout} /> : <HomePage onLogin={handleShowLogin} onSignUp={handleShowSignUp} />;
+      case 'services-listing':
+        return <ServicesListingPage onBack={() => setCurrentView('home')} />;
       case 'vehicle-details':
         return selectedVehicle ? (
           <VehicleDetails 
