@@ -72,6 +72,7 @@ function App() {
   };
 
   const handleConfirmationAction = (action: 'home' | 'dashboard') => {
+  }
   const handleConfirmationAction = (action: 'services' | 'dashboard') => {
     if (action === 'services') {
       setCurrentView('services-listing');
